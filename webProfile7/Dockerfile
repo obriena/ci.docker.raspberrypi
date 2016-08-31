@@ -19,7 +19,6 @@ ARG REPOSITORIES_PROPERTIES=""
 
 #copy a server.xml over from same directory as this dockerfile - customize your server config there first
 COPY server.xml /config/
-COPY docker-server /opt/ibm/docker/
 
 RUN if [ ! -z $REPOSITORIES_PROPERTIES ]; then mkdir /opt/ibm/wlp/etc/ \
     && echo $REPOSITORIES_PROPERTIES > /opt/ibm/wlp/etc/repositories.properties; fi \
