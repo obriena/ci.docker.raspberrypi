@@ -3,7 +3,7 @@ Dockerfiles for building Liberty images to run on Raspberry Pi.
 
 To build an image that can run on the Raspberry Pi you must:
 
-1. run the buildfile in the "kernel" directory, saving it as "websphere-liberty:kernel". 
+1. Run the buildfile in the "kernel" directory, saving it as "websphere-liberty:kernel". 
 
 2. Run the Dockerfile in the "basicfeatures" directory. 
  
