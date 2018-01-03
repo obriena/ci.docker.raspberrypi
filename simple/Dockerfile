@@ -47,5 +47,19 @@ RUN /opt/ibm/wlp/bin/server create \
     && rm -rf $WLP_OUTPUT_DIR/.classCache /output/workarea
 EXPOSE 9080 9443
 
-#run server - note as this is kernel the server won't have any features installed.
+#Added from the basicfeatures folder
+#copy a server.xml over from same directory as this dockerfile - customize your server config there first
+COPY server.xml /config/
+
+RUN if [ ! -z $REPOSITORIES_PROPERTIES ]; then mkdir /opt/ibm/wlp/etc/ \
+    && echo $REPOSITORIES_PROPERTIES > /opt/ibm/wlp/etc/repositories.properties; fi \
+    && installUtility install --acceptLicense \
+    servlet-3.1 jsp-2.3 websocket-1.1 localConnector-1.0 \
+    && if [ ! -z $REPOSITORIES_PROPERTIES ]; then rm /opt/ibm/wlp/etc/repositories.properties; fi \
+    && rm -rf /output/workarea /output/logs
+
+#uncomment the below line and the change app name to match that of an app in same dir as this Dockerfile to
+#install the app into your image
+#COPY appname.war /opt/ibm/wlp/usr/servers/defaultServer/dropins/
+
 CMD ["/opt/ibm/wlp/bin/server", "run", "defaultServer"]
